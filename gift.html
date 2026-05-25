@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>THE_REVEAL_V2.SYS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&family=VT323&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --glow-color: #ff6600;
+            --death-red: #ff2222;
+        }
+
+        body { 
+            background: #000; 
+            color: #fff; 
+            font-family: 'Special Elite', serif; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            height: 100vh; 
+            margin: 0; 
+            overflow: hidden;
+            text-align: center;
+        }
+
+        /* --- CRT SCANLINE OVERLAY --- */
+        body::before {
+            content: " ";
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+            background-size: 100% 4px;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        /* --- RESTORED BACK PORTAL --- */
+        .back { 
+            position: absolute; top: 20px; left: 20px;
+            color: #444; text-decoration: none; font-size: 1.5rem;
+            transition: 0.3s; z-index: 1100; font-family: 'VT323', monospace;
+        }
+        .back:hover { color: var(--glow-color); text-shadow: 0 0 10px var(--glow-color); }
+
+        /* --- STAGE 1: CANDLE --- */
+        #countdown-area {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+
+        #timer { 
+            font-size: 6rem; line-height: 1; color: var(--glow-color);
+            text-shadow: 0 0 20px var(--glow-color); margin: 10px 0;
+            font-family: 'VT323', monospace;
+        }
+
+        .candle-container {
+            position: relative; width: 60px; height: 140px;
+            display: flex; flex-direction: column; align-items: center;
+            filter: drop-shadow(0 0 15px rgba(255, 170, 0, 0.5));
+        }
+
+        .flame {
+            width: 24px; height: 35px;
+            background: linear-gradient(to bottom, #fff, #ffaa00, #ff6600);
+            border-radius: 50% 50% 35% 35%;
+            animation: flicker 0.1s infinite alternate;
+            z-index: 2;
+        }
+
+        .wax {
+            width: 45px; height: 90px;
+            background: linear-gradient(to right, #ccc, #fff, #ccc);
+            border-radius: 5px; position: relative; transition: height 1s linear;
+        }
+
+        @keyframes flicker {
+            0% { transform: scale(1) rotate(-1deg); opacity: 0.9; }
+            100% { transform: scale(1.1) rotate(1deg); opacity: 1; }
+        }
+
+        /* --- STAGE 2: TERMINAL --- */
+        #terminal-log {
+            display: none; font-size: 1.5rem; color: var(--death-red);
+            text-align: left; width: 450px; height: 200px; overflow: hidden;
+            font-family: 'VT323', monospace;
+        }
+
+        /* --- STAGE 3: REVEAL --- */
+        #gift-reveal { display: none; }
+        #gift-reveal h1 { font-size: 3rem; color: var(--death-red); margin-bottom: 20px; }
+        #gift-image {
+            max-width: 80vw; max-height: 50vh;
+            border: 6px solid #fff; border-radius: 4px;
+            box-shadow: 0 0 50px rgba(255,0,0,0.4);
+        }
+
+        /* --- GLITCH ANIMATION --- */
+        .glitch-active { animation: screen-glitch 0.2s steps(2) infinite; }
+        @keyframes screen-glitch {
+            0% { transform: translate(4px, -4px); filter: invert(1); }
+            50% { transform: translate(-4px, 4px); background: #f00; }
+            100% { transform: translate(0); }
+        }
+
+        /* --- OVERLAY --- */
+        #start-overlay {
+            position: fixed; top:0; left:0; width:100%; height:100%;
+            background: rgba(0,0,0,0.98); z-index: 2000;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; cursor: pointer;
+        }
+
+        .hidden { display: none !important; }
+    </style>
+</head>
+<body id="main-body">
+
+    <div id="start-overlay">
+        <h2 style="border: 2px solid #fff; padding: 20px;">[ CLICK TO INITIALIZE SYSTEM ]</h2>
+    </div>
+
+    <a href="index.html" class="back"><< BACK_TO_PORTAL</a>
+
+    <div id="countdown-area">
+        <h1 id="instruction" style="color: var(--death-red);">BLOW OUT THE CANDLE AFTER THE COUNTDOWN ENDS</h1>
+        <div id="timer">5</div>
+        <div class="candle-container">
+            <div class="flame"></div>
+            <div id="wax-body" class="wax"></div>
+        </div>
+    </div>
+
+    <div id="terminal-log"></div>
+
+    <div id="gift-reveal">
+        <h1>HAPPY BIRTHDAY BABIII!!</h1>
+        <img src="c:\Users\Sedric Geoff\OneDrive\Desktop\angela\0ed5a0b6-9a63-48e1-8bff-f4b3b1d8d481.jpg" id="gift-image" alt="Surprise!">
+        <h2 style="margin-top: 20px;">I LOVE YOU SO MUCHYY</h2>
+    </div>
+
+    <!-- AUDIO ELEMENTS - GAVE THEM UNIQUE IDS -->
+    <audio id="bg-music" loop>
+        <source src="death-note-theme.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="reveal-sfx-1">
+        <source src="c:\Users\Sedric Geoff\OneDrive\Desktop\angela\8-bit Happy Birthday - QuickSounds.com.mp3" type="audio/mpeg">
+    </audio>
+
+    <audio id="reveal-sfx-2">
+        <source src="c:\Users\Sedric Geoff\OneDrive\Desktop\angela\spongebob-happy-birth-day!-made-with-Voicemod (1).mp3" type="audio/mpeg">
+    </audio>
+
+    <script>
+        const timerDisplay = document.getElementById('timer');
+        const countdownArea = document.getElementById('countdown-area');
+        const giftReveal = document.getElementById('gift-reveal');
+        const bgMusic = document.getElementById('bg-music');
+        const sfx1 = document.getElementById('reveal-sfx-1');
+        const sfx2 = document.getElementById('reveal-sfx-2');
+        const overlay = document.getElementById('start-overlay');
+        const waxBody = document.getElementById('wax-body');
+        const terminal = document.getElementById('terminal-log');
+        const body = document.getElementById('main-body');
+
+        let timeLeft = 5;
+
+        overlay.addEventListener('click', () => {
+            overlay.style.display = 'none';
+            bgMusic.play().catch(e => console.log("Audio play blocked"));
+            startSequence();
+        });
+
+        // CHAINING THE AUDIO: When the 8-bit song ends, start Spongebob
+        sfx1.addEventListener('ended', () => {
+            sfx2.play();
+        });
+
+        function startSequence() {
+            document.getElementById('instruction').innerText = "BLOW OUT THE CANDLE";
+            const countdown = setInterval(() => {
+                timeLeft--;
+                timerDisplay.innerText = timeLeft;
+                waxBody.style.height = (40 + (timeLeft * 10)) + "px";
+
+                if (timeLeft <= 0) {
+                    clearInterval(countdown);
+                    startDecryption();
+                }
+            }, 1000);
+        }
+
+        function startDecryption() {
+            countdownArea.classList.add('hidden');
+            terminal.style.display = 'block';
+            const logs = [
+                "> BYPASSING FIREWALL...",
+                "> ACCESSING CORE_DATA.DB...",
+                "> TARGET: ANGELA...",
+                "> 10% .. 45% .. 89% ..",
+                "> SUCCESS: FILE_UNLOCKED"
+            ];
+
+            let i = 0;
+            const logInterval = setInterval(() => {
+                const line = document.createElement('div');
+                line.innerText = logs[i];
+                terminal.appendChild(line);
+                i++;
+                if (i >= logs.length) {
+                    clearInterval(logInterval);
+                    setTimeout(triggerFinalReveal, 800);
+                }
+            }, 400);
+        }
+
+        function triggerFinalReveal() {
+            terminal.classList.add('hidden');
+            body.classList.add('glitch-active');
+            
+            bgMusic.pause();
+            sfx1.play(); // Play the first reveal audio
+            
+            setTimeout(() => {
+                body.classList.remove('glitch-active');
+                giftReveal.style.display = 'block';
+            }, 500);
+        }
+    </script>
+</body>
+</html>

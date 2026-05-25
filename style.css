@@ -1,0 +1,136 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    height:100vh;
+
+    /* PUT YOUR IMAGE HERE */
+    background:
+        linear-gradient(rgba(0,0,0,0.82), rgba(0,0,0,0.9)),
+        url("c:\Users\Sedric Geoff\OneDrive\Desktop\angela\image.jpg");
+
+    background-size:cover;
+    background-position:center;
+    background-repeat:no-repeat;
+
+    font-family:'Cinzel', serif;
+    color:white;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    overflow:hidden;
+}
+
+/* Dark Fog Effect */
+body::before{
+    content:"";
+    position:absolute;
+    width:100%;
+    height:100%;
+    background:
+        radial-gradient(circle at center,
+        transparent 20%,
+        rgba(0,0,0,0.75) 80%);
+}
+
+/* Main Container */
+.container{
+    position:relative;
+    z-index:2;
+
+    width:350px;
+    padding:45px;
+
+    text-align:center;
+
+    border:1px solid rgba(255,255,255,0.15);
+    background:rgba(0,0,0,0.45);
+
+    backdrop-filter:blur(4px);
+
+    box-shadow:
+        0 0 20px rgba(255,255,255,0.05),
+        0 0 60px rgba(0,0,0,0.8);
+
+    border-radius:8px;
+}
+
+/* Small top text */
+.top-text{
+    font-size:11px;
+    letter-spacing:4px;
+    color:#888;
+    margin-bottom:12px;
+}
+
+/* Title */
+h1{
+    font-size:42px;
+    letter-spacing:6px;
+    margin-bottom:15px;
+
+    color:#f5f5f5;
+
+    text-shadow:
+        0 0 5px rgba(255,255,255,0.2),
+        0 0 20px rgba(255,255,255,0.08);
+}
+
+/* Decorative line */
+.line{
+    width:70%;
+    height:1px;
+    background:rgba(255,255,255,0.2);
+
+    margin:0 auto 30px auto;
+}
+
+/* Navigation */
+nav{
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+}
+
+/* Links */
+.link{
+    text-decoration:none;
+    color:#d6d6d6;
+
+    font-size:15px;
+    letter-spacing:3px;
+
+    padding:12px;
+
+    border:1px solid rgba(255,255,255,0.12);
+
+    transition:0.35s ease;
+}
+
+/* Hover */
+.link:hover{
+    background:white;
+    color:black;
+
+    transform:scale(1.04);
+
+    box-shadow:
+        0 0 15px white,
+        0 0 35px rgba(255,255,255,0.4);
+}
+
+/* Bottom Quote */
+.bottom-text{
+    margin-top:35px;
+
+    font-size:11px;
+    color:#777;
+
+    letter-spacing:2px;
+    font-style:italic;
+}

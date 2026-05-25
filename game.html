@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Death Note</title>
+    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Special+Elite&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            background: #050505;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Special Elite', monospace;
+            color: white;
+            overflow: hidden;
+            perspective: 2000px; /* Essential for 3D flip */
+        }
+
+        .back {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            color: #555;
+            text-decoration: none;
+            font-size: 14px;
+            z-index: 100;
+            letter-spacing: 2px;
+        }
+
+        /* The Notebook Container */
+        .death-note-book {
+            width: 500px;
+            height: 700px;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        /* When the 'open' class is added via JS */
+        .death-note-book.open {
+            transform: rotateY(-160deg) translateX(50%);
+        }
+
+        /* General Page Styling */
+        .page {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            backface-visibility: hidden;
+            border-radius: 5px 15px 15px 5px;
+            box-shadow: 10px 10px 30px rgba(0,0,0,0.5);
+        }
+
+        /* FRONT COVER (Page One) */
+        .cover-front {
+            z-index: 2;
+            background: #000;
+            border: 2px solid #222;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .cover-front img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(30%) contrast(110%);
+        }
+
+        /* INSIDE PAGE (Page Two) */
+        .inside-page {
+            background: #1a1a1a;
+            background-image: linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px);
+            background-size: 100% 30px; /* Faint lined paper effect */
+            padding: 40px;
+            box-sizing: border-box;
+            transform: rotateY(180deg); /* Face the opposite way */
+            display: flex;
+            flex-direction: column;
+            border-left: 5px solid #000;
+        }
+
+        h2 {
+            font-family: 'Creepster', cursive;
+            font-size: 40px;
+            text-align: center;
+            color: #fff;
+            margin-top: 0;
+            text-shadow: 0 0 10px rgba(255,0,0,0.3);
+        }
+
+        .input-group { margin-bottom: 25px; }
+
+        label {
+            display: block;
+            font-size: 11px;
+            color: #666;
+            margin-bottom: 5px;
+            text-transform: uppercase;
+        }
+
+        input, textarea {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid #333;
+            color: #ddd;
+            font-family: 'Special Elite', monospace;
+            font-size: 18px;
+            outline: none;
+            padding: 8px 0;
+            resize: none;
+        }
+
+        input:focus { border-bottom: 1px solid #777; }
+
+        .btn-container {
+            margin-top: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        button {
+            background: transparent;
+            border: 1px solid #444;
+            color: #888;
+            padding: 12px;
+            font-family: 'Creepster', cursive;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            color: white;
+            border-color: white;
+            background: rgba(255,255,255,0.05);
+        }
+
+        #restartBtn { color: #400; border-color: #200; }
+        #restartBtn:hover { color: red; border-color: red; }
+
+        /* FX */
+        .effect { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1000; }
+        .flash { animation: flashAnim 0.5s ease forwards; }
+        @keyframes flashAnim {
+            0% { background: red; opacity: 0; }
+            50% { opacity: 0.7; }
+            100% { opacity: 0; }
+        }
+
+        .shake { animation: shakeAnim 0.3s; }
+        @keyframes shakeAnim {
+            0%, 100% { transform: translate(0,0); }
+            25% { transform: translate(4px,-4px); }
+            75% { transform: translate(-4px,4px); }
+        }
+
+        .curse-text {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Creepster', cursive;
+            font-size: 60px;
+            color: red;
+            text-shadow: 0 0 30px black;
+            z-index: 1001;
+            pointer-events: none;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<a href="index.html" class="back"><< EXIT_TO_PORTAL</a>
+
+<div class="death-note-book" id="book" onclick="openBook()">
+    <!-- Front Cover -->
+    <div class="page cover-front">
+        <img src="c:\Users\Sedric Geoff\OneDrive\Desktop\angela\bd07f3b0-69f4-4acf-9550-f24211759765.jpg" alt="Death Note">
+    </div>
+
+    <!-- Inner Page (The UI) -->
+    <div class="page inside-page" onclick="event.stopPropagation()">
+        <h2>JUDGMENT</h2>
+
+        <div class="input-group">
+            <label>Name of the Subject</label>
+            <input type="text" id="targetName" placeholder="Enter name..." autocomplete="off">
+        </div>
+
+        <div class="input-group">
+            <label>Cause / Details</label>
+            <textarea id="cause" rows="6" placeholder="Heart attack in 40s if blank..."></textarea>
+        </div>
+
+        <div class="btn-container">
+            <button onclick="sign()">SEAL FATE</button>
+            <button onclick="restartDeathNote()" id="restartBtn">RESTART</button>
+        </div>
+    </div>
+</div>
+
+<!-- AUDIOS -->
+<audio id="deathAudio" src="c:\Users\Sedric Geoff\OneDrive\Desktop\angela\kira-laugh.mp3"></audio>
+<audio id="writeAudio" src="c:\Users\Sedric Geoff\OneDrive\Desktop\angela\death-note-writing-theme-c.mp3" loop></audio>
+
+<div class="effect" id="effect"></div>
+<div class="curse-text" id="curseText"></div>
+
+<script>
+const book = document.getElementById('book');
+const input = document.getElementById("targetName");
+const writeAudio = document.getElementById("writeAudio");
+let startedWriting = false;
+
+function openBook() {
+    book.classList.add('open');
+}
+
+input.addEventListener("input", () => {
+    if (!startedWriting) {
+        writeAudio.play();
+        startedWriting = true;
+    }
+});
+
+function sign() {
+    let name = document.getElementById('targetName').value;
+    if(name.trim() === "") {
+        alert("A name must be written.");
+        return;
+    }
+
+    writeAudio.pause();
+    writeAudio.currentTime = 0;
+    document.getElementById("deathAudio").play();
+
+    // Flash & Shake
+    let fx = document.getElementById("effect");
+    fx.classList.remove("flash");
+    void fx.offsetWidth;
+    fx.classList.add("flash");
+    document.body.classList.add("shake");
+    setTimeout(() => document.body.classList.remove("shake"), 400);
+
+    // Typing Curse
+    let curse = document.getElementById("curseText");
+    let message = name.toUpperCase() + " WILL DIE";
+    curse.innerHTML = "";
+    let i = 0;
+    let typing = setInterval(() => {
+        curse.innerHTML += message[i];
+        i++;
+        if(i >= message.length) clearInterval(typing);
+    }, 70);
+}
+
+function restartDeathNote() {
+    document.getElementById("targetName").value = "";
+    document.getElementById("cause").value = "";
+    document.getElementById("curseText").innerHTML = "";
+    startedWriting = false;
+    book.classList.remove('open');
+}
+</script>
+
+</body>
+</html>

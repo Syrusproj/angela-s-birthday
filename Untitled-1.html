@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Death Note: Sam Owen</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Creepster&family=Special+Elite&display=swap" rel="stylesheet">
+
+<style>
+body {
+    margin: 0;
+    background: black;
+    color: white;
+    font-family: 'Special Elite', monospace;
+    overflow: hidden;
+}
+
+/* INTRO SCREEN */
+.intro {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    z-index: 10;
+}
+
+.intro h1 {
+    font-family: 'Creepster', cursive;
+    font-size: 60px;
+    letter-spacing: 5px;
+}
+
+.intro button {
+    margin-top: 30px;
+    padding: 15px 30px;
+    background: transparent;
+    border: 1px solid white;
+    color: white;
+    cursor: pointer;
+}
+
+/* GAME */
+.game {
+    display: none;
+    height: 100vh;
+    display: flex;
+}
+
+/* LEFT STORY */
+.story {
+    width: 50%;
+    padding: 40px;
+    border-right: 2px solid #222;
+}
+
+/* RIGHT INPUT */
+.panel {
+    width: 50%;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+}
+
+input, textarea {
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid #555;
+    color: white;
+    margin-bottom: 20px;
+    padding: 10px;
+    font-size: 18px;
+}
+
+button {
+    padding: 15px;
+    background: transparent;
+    border: 1px solid white;
+    color: white;
+    cursor: pointer;
+}
+
+/* TIMER */
+.timer {
+    position: fixed;
+    top: 10px;
+    right: 20px;
+    font-size: 20px;
+    color: red;
+}
+
+/* EFFECTS */
+.flash {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: red;
+    opacity: 0;
+}
+
+.glitch {
+    animation: glitch 0.3s;
+}
+
+@keyframes glitch {
+    0% { transform: translate(0); }
+    25% { transform: translate(-5px,5px); }
+    50% { transform: translate(5px,-5px); }
+    75% { transform: translate(-5px,-5px); }
+    100% { transform: translate(0); }
+}
+
+/* END TEXT */
+.result {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-family: 'Creepster';
+    font-size: 50px;
+    opacity: 0;
+    text-align: center;
+}
+</style>
+</head>
+
+<body>
+
+<!-- INTRO -->
+<div class="intro" id="intro">
+    <h1>DEATH NOTE</h1>
+    <p>You found the notebook...</p>
+    <button onclick="startGame()">OPEN</button>
+</div>
+
+<!-- GAME -->
+<div class="game" id="game">
+
+<div class="story">
+<h2>SAM OWEN</h2>
+<p>
+A name appears in your mind... Sam Owen.  
+You don't know why.  
+But the notebook is reacting.  
+
+The rules are clear:  
+The human whose name is written shall die.  
+
+You have 40 seconds.
+</p>
+</div>
+
+<div class="panel">
+<input id="name" placeholder="Write the name...">
+<textarea id="cause" placeholder="Cause of death..."></textarea>
+<button onclick="writeDeath()">WRITE</button>
+</div>
+
+</div>
+
+<div class="timer" id="timer">40</div>
+<div class="flash" id="flash"></div>
+<div class="result" id="result"></div>
+
+<!-- AUDIO -->
+<audio id="audio" src="PUT_AUDIO_HERE.mp3"></audio>
+
+<script>
+let time = 40;
+let timerInterval;
+
+function startGame(){
+    document.getElementById("intro").style.display = "none";
+    document.getElementById("game").style.display = "flex";
+
+    timerInterval = setInterval(()=>{
+        time--;
+        document.getElementById("timer").innerText = time;
+
+        if(time <= 0){
+            endGame("YOU HESITATED... YOU LOSE");
+        }
+    },1000);
+}
+
+function writeDeath(){
+    let name = document.getElementById("name").value.trim();
+    let cause = document.getElementById("cause").value.trim();
+
+    if(name === ""){
+        alert("Write a name.");
+        return;
+    }
+
+    document.getElementById("audio").play();
+
+    document.body.classList.add("glitch");
+
+    let flash = document.getElementById("flash");
+    flash.style.opacity = 0.8;
+
+    setTimeout(()=>{ flash.style.opacity = 0; },300);
+
+    clearInterval(timerInterval);
+
+    // MULTIPLE ENDINGS
+    if(name.toLowerCase() === "sam owen"){
+        if(cause === ""){
+            endGame("SAM OWEN\nHEART ATTACK");
+        } else if(cause.toLowerCase().includes("accident")){
+            endGame("SAM OWEN\nMYSTERIOUS ACCIDENT");
+        } else {
+            endGame("SAM OWEN\n" + cause.toUpperCase());
+        }
+    } else {
+        endGame("THE NOTEBOOK REJECTED THE NAME");
+    }
+}
+
+function endGame(text){
+    let result = document.getElementById("result");
+    result.innerText = text;
+    result.style.opacity = 1;
+}
+</script>
+
+</body>
+</html>

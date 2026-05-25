@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Death Note Letter</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Special+Elite&display=swap" rel="stylesheet">
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:
+    linear-gradient(rgba(0,0,0,.88), rgba(0,0,0,.96)),
+    url('https://images.unsplash.com/photo-1518709268805-4e9042af2176?auto=format&fit=crop&w=1920&q=80');
+    background-size:cover;
+    background-position:center;
+    background-attachment:fixed;
+
+    color:#e6e6e6;
+    font-family:'Special Elite', monospace;
+    line-height:1.9;
+    padding:40px 20px;
+    overflow-x:hidden;
+}
+
+body::before{
+    content:'';
+    position:fixed;
+    inset:0;
+    background:
+    repeating-linear-gradient(
+        0deg,
+        transparent,
+        transparent 2px,
+        rgba(255,255,255,.02) 3px
+    );
+    pointer-events:none;
+}
+
+.back{
+    color:#9c9c9c;
+    text-decoration:none;
+    display:block;
+    max-width:900px;
+    margin:0 auto 25px auto;
+    font-family:'Cinzel', serif;
+    letter-spacing:2px;
+    transition:.3s;
+}
+
+.back:hover{
+    color:#b40000;
+    text-shadow:0 0 10px red;
+}
+
+.container{
+    max-width:900px;
+    margin:auto;
+    background:rgba(8,8,8,.90);
+    border:1px solid #444;
+    padding:50px;
+    box-shadow:
+    0 0 25px rgba(255,0,0,.15),
+    0 0 80px rgba(0,0,0,.8);
+    position:relative;
+    animation:flicker 4s infinite;
+}
+
+.container::before{
+    content:"DEATH NOTE";
+    position:absolute;
+    top:-28px;
+    right:20px;
+    color:#7a0000;
+    font-family:'Cinzel', serif;
+    font-size:18px;
+    letter-spacing:6px;
+}
+
+h2{
+    text-align:center;
+    font-family:'Cinzel', serif;
+    color:white;
+    font-size:2.4rem;
+    letter-spacing:3px;
+    border-bottom:1px solid #500;
+    padding-bottom:15px;
+    margin-bottom:30px;
+    text-shadow:
+    0 0 8px rgba(255,255,255,.4),
+    0 0 20px rgba(255,0,0,.25);
+}
+
+p{
+    white-space:pre-line;
+    font-size:1.15rem;
+    text-shadow:0 0 3px rgba(255,255,255,.08);
+}
+
+::-webkit-scrollbar{
+    width:8px;
+}
+
+::-webkit-scrollbar-track{
+    background:#111;
+}
+
+::-webkit-scrollbar-thumb{
+    background:#5b0000;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background:#8a0000;
+}
+
+@keyframes flicker{
+    0%,100%{opacity:1;}
+    50%{opacity:.96;}
+}
+</style>
+</head>
+
+<body>
+
+<!-- BACKGROUND MUSIC (HIDDEN) -->
+<audio id="bgmusic" autoplay loop>
+    <source src="c:\Users\Sedric Geoff\OneDrive\Desktop\angela\TV Girl - The Blonde (Lyrics).mp3" type="audio/mpeg">
+</audio>
+
+<script>
+window.addEventListener('load', function () {
+    const music = document.getElementById('bgmusic');
+    music.volume = 0.5;
+
+    const playPromise = music.play();
+
+    if (playPromise !== undefined) {
+        playPromise.catch(() => {
+            document.addEventListener('click', () => {
+                music.play();
+            }, { once: true });
+        });
+    }
+});
+</script>
+
+<a href="index.html" class="back">← RETURN_TO_THE_NOTEBOOK</a>
+
+<div class="container">
+
+<h2>To my most beloved Angela.</h2>
+
+<p>
+This is the first birthday we celebrate together, a memory I will always hold close to my heart. Today, more than ever, I am grateful that I am by your side
+not merely as someone you know but as your companion, your soulmate, a reflection of you everything and everywhere, a husband who will stay through every season, through every joy and every storm. I appreciate everything you've done for me
+not just the moments that made me happy,
+but also the countless little things you never realized you were doing. the way you made ordinary days feel special, the way your presence brought comfort without trying, and the way your words stayed with me long after our conversations ended. There are things you've done that you may never be aware of moments when a simple message lifted my heavy heart, times when your kindness quieted my worries,
+and days when your existence alone was enough to make life feel lighter.
+
+Being with you is a feeling beyond words. I stay in the presence of yours, and our souls become as one. Every feeling we give each other, every emotion, everything we share it all feels like something deeper than love, something real and endless. Loving you taught me the depths of both love and pain where a quiet ache where I feel something in my heart, aching and beating your name inside me. a gutwrenching feeling every time an argument occurs, a pain where something within me longs to break free a consuming emotion I'm still not used to carrying.
+
+Beyond our skin lived two souls longing for affection, searching for a place to belong. We met in the most unexpected way, yet somehow that path led us to each other. What began as a simple encounter became a reason to open our hearts, to understand one another more deeply, and to discover a love neither of us expected to find. I'll be forever grateful that you came into my life. No amount of words could ever fully capture how deeply I appreciate you. Your love has colored my days with warmth, transformed my life in ways I never imagined, and awakened parts of me I never knew were waiting to be found. Every letter you've given me carries a piece of your heart and I treasure each one as a reminder of the love that has made my world brighter, softer, and more beautiful. Every word you write stays with me, shaping my every reaction, leaving me quietly overwhelmed as my heart overflows with a love words can never fully contain.
+
+Baby, thank you for staying with me through every season of our lives. Through the highs that made us smile and the lows that tested our strength, you remained by my side. You made me realize that I was never alone. There was always someone checking if I was okay, listening to all my rants, stories, and laughter, reassuring me that you were here.
+
+Your presence is something no one could ever replace. Your energy, your jokes, and the sound of your voice bring me comfort in ways words can hardly explain. Even doing absolutely nothing together online became one of my favorite things because every moment felt special when it was spent with you. Every morning, you gave me comfort and motivation to face the day. Every late night, you gave me peace and a place where my thoughts could finally rest. You turned ordinary moments into memories I will always treasure, simply because they were shared with you.
+
+Once again, happy birthday my Angela. May every dream you carry find its way to you, and may life return all the happiness and love you so effortlessly give. Thank you for being my comfort, my joy, and the most beautiful part of my story. I love you 3000.
+
+With all my love and deepest affection,
+Syrus.
+</p>
+
+</div>
+
+</body>
+</html>
